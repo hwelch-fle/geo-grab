@@ -350,27 +350,26 @@ if __name__ == '__main__':
             help='Install pillow dependency',
             action='store_true',
         )
+    args = parser.parse_args()
 
-    _args = parser.parse_args()
-
-    if not HAS_PIL and _args.install:
+    if not HAS_PIL and args.install:
         _install_pillow()
         print('pillow installed, please run the script again')
         sys.exit(1)
 
-    _services: tuple[Service, ...] = tuple(_args.services) if 'all' not in _args.services else Services
+    services: tuple[Service, ...] = tuple(args.services) if 'all' not in args.services else Services
     main(
-        Path(_args.directory),
+        Path(args.directory),
         # Flags
-        _args.verbose,
-        _args.open,
+        args.verbose,
+        args.open,
         
         # URL/Browser
-        _args.url,        
-        _services,
+        args.url,        
+        services,
         
-        _args.kml,
-        _args.kmz,
-        _args.geojson,
-        _args.csv,
+        args.kml,
+        args.kmz,
+        args.geojson,
+        args.csv,
     )
