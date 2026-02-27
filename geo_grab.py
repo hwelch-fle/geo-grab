@@ -246,6 +246,11 @@ def main(
     csv_name: str | None,
 ):
     _files: PointInfo = []
+    if w_url and verbose:
+        print(f'writing urls for {services}...')
+    if open_ and verbose:
+        print(f'opening tabs for {services}...')
+    
     for img, geo_info in get_info(directory):
         if not geo_info:
             continue
@@ -260,14 +265,22 @@ def main(
             if w_url:
                 service_path = img.with_stem(f'{img.stem}_{service}')
                 write_url(service_path, url)
-        if kml_name is not None:
-            write_kml((directory / kml_name).with_suffix('.kml'), _files)
-        if kmz_name is not None:
-            write_kmz((directory / kmz_name).with_suffix('.kmz'), _files)
-        if geojson_name is not None:
-            write_geojson((directory / geojson_name).with_suffix('.geojson'), _files)
-        if csv_name is not None:
-            write_csv((directory / csv_name).with_suffix('.csv'), _files)
+    if kml_name is not None:
+        if verbose:
+            print('writing kml...')
+        write_kml((directory / kml_name).with_suffix('.kml'), _files)
+    if kmz_name is not None:
+        if verbose:
+            print('writing kmz...')
+        write_kmz((directory / kmz_name).with_suffix('.kmz'), _files)
+    if geojson_name is not None:
+        if verbose:
+            print('writing geojson...')
+        write_geojson((directory / geojson_name).with_suffix('.geojson'), _files)
+    if csv_name is not None:
+        if verbose:
+            print('writing csv...')
+        write_csv((directory / csv_name).with_suffix('.csv'), _files)
 
 
 if __name__ == '__main__':
