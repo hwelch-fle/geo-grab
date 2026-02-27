@@ -350,6 +350,11 @@ if __name__ == '__main__':
             help='Install pillow dependency',
             action='store_true',
         )
+    
+    if len(sys.argv) == 1:
+        parser.print_help()
+        sys.exit(1)
+    
     args = parser.parse_args()
 
     if not HAS_PIL and args.install:
